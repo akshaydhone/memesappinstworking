@@ -26,6 +26,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/view_root"
     tools:context="net.gsantner.memetastic.activity.MemeCreateActivity">
 
     <android.support.design.widget.AppBarLayout

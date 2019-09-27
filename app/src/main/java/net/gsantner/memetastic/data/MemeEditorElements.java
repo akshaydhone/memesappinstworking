@@ -91,7 +91,6 @@ public class MemeEditorElements implements Serializable {
 
         public EditorCaption(MemeData.Font font, int positionType) {
             _font = font;
-
             // TODO: Really load this from config if possible
             _captionConf = new MemeConfig.Caption();
             _captionConf.setPositionType(positionType);

@@ -631,6 +631,8 @@ public class MainActivity extends AppCompatActivity
                         case AssetUpdater.UpdateThread.DOWNLOAD_STATUS__FINISHED: {
                             updateInfoBar(percent, R.string.successfully_downloaded, R.drawable.ic_gavel_white_48px, false);
                             break;
+
+
                         }
                     }
                     return;
@@ -771,4 +773,7 @@ public class MainActivity extends AppCompatActivity
         outState.putInt(BOTTOM_NAV_POSITION, _currentMainMode);
         super.onSaveInstanceState(outState);
     }
+
+
+
 }

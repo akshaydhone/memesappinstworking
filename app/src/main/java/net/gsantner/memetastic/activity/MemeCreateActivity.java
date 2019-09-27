@@ -153,6 +153,9 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
     private View _dialogView;
     private boolean _savedAsMemeTemplate = false;
 
+
+
+
     //#####################
     //## Methods
     //#####################
@@ -259,6 +262,7 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
         outState.putBoolean("captionEditBar", _editBar != null && _editBar.getVisibility() == View.VISIBLE);
         outState.putString("captionText", _create_caption != null ? _create_caption.getText().toString() : "");
         this._savedInstanceState = outState;
+
     }
 
     private void prepareForSaving() {
@@ -497,10 +501,12 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
                     .setMessage(R.string.saved_meme_successfully__appspecific)
                     .setNegativeButton(R.string.keep_editing, null)
                     .setNeutralButton(R.string.share_meme__appspecific, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            _app.shareBitmapToOtherApp(_lastBitmap, MemeCreateActivity.this);
-                        }
-                    })
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    _app.shareBitmapToOtherApp(_lastBitmap, MemeCreateActivity.this);
+                                }
+
+                            }
+                    )
                     .setPositiveButton(R.string.close, (dialog1, which) -> finish());
             dialog.show();
         }
@@ -734,13 +740,16 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
                 view.setBackgroundColor(colorInt);
                 break;
             }
-            case R.id.meme_dialog__color_picker_for_text: {// text background color
+            case R.id.meme_dialog__color_picker_for_text: {
+                // text background color
                 if (_isBottom) {
                     _memeEditorElements.getCaptionBottom().setTextColor(colorInt);
                 }
                 if (!_isBottom || _memeEditorElements.getImageMain().isTextSettingsGlobal()) {
                     _memeEditorElements.getCaptionTop().setTextColor(colorInt);
                 }
+
+
                 View view = _dialogView.findViewById(R.id.meme_dialog__color_picker_for_text);
                 view.setBackgroundColor(colorInt);
                 break;
@@ -774,6 +783,7 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         }
 
+
         double pad = 1 + memeEditorElements.getImageMain().getPadding() / 100.0;
         if (pad > 1.01) {
             Bitmap workBmp = Bitmap.createBitmap((int) (bitmap.getWidth() * pad), (int) (bitmap.getHeight() * pad), Bitmap.Config.ARGB_8888);
@@ -795,10 +805,8 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
         // so we need to convert it to mutable one
         bitmap = bitmap.copy(bitmapConfig, true);
         Canvas canvas = new Canvas(bitmap);
-
         // new antialiased Paint
         TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-
         paint.setStrokeWidth(borderScale);
 
         for (MemeEditorElements.EditorCaption caption : _memeEditorElements.getCaptions()) {
@@ -810,7 +818,9 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
                 paint.setTypeface(caption.getFont().typeFace);
                 paint.setColor(caption.getBorderColor());
                 paint.setStyle(Paint.Style.FILL_AND_STROKE);
-            } else {
+            }
+
+            else {
                 paint.setTextSize((int) (scale * caption.getFontSize()));
                 paint.setTypeface(caption.getFont().typeFace);
                 paint.setColor(caption.getBorderColor());
