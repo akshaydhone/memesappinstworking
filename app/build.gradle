@@ -19,6 +19,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 #########################################################*/
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 if (enable_plugin_kotlin) {
     apply plugin: 'kotlin-android'
     apply plugin: 'kotlin-android-extensions'
@@ -108,6 +109,8 @@ android {
 
 dependencies {
     // Testing
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'com.google.firebase:firebase-storage:16.0.4'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.assertj:assertj-core:3.13.1'
 

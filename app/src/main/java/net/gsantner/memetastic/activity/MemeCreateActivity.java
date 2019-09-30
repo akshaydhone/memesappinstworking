@@ -20,6 +20,7 @@
 #########################################################*/
 package net.gsantner.memetastic.activity;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -66,6 +67,12 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.jaredrummler.android.colorpicker.ColorPanelView;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
@@ -86,12 +93,14 @@ import net.gsantner.opoc.ui.TouchImageView;
 import net.gsantner.opoc.util.FileUtils;
 import net.gsantner.opoc.util.ShareUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -163,6 +172,11 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FirebaseStorage storage;
+        StorageReference storageReference;
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         if (AppSettings.get().isEditorStatusBarHidden()) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
@@ -433,7 +447,10 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
             }
         } catch (Exception ignored) {
         }
-
+        FirebaseStorage storage;
+        StorageReference storageReference;
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         switch (item.getItemId()) {
             case R.id.action_share: {
                 recreateImage(true);
@@ -443,6 +460,7 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
             case R.id.action_save: {
                 recreateImage(true);
                 saveMemeToFilesystem(true);
+                uploadImage();
                 return true;
             }
             case R.id.action_save_as_template: {
@@ -479,7 +497,13 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
             }
         }
         return super.onOptionsItemSelected(item);
+
+
+
     }
+
+
+
 
     private boolean saveMemeToFilesystem(boolean showDialog) {
         if (!PermissionChecker.doIfPermissionGranted(this)) {
@@ -520,6 +544,75 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
         }
         return wasSaved;
     }
+
+
+
+
+
+
+    private void uploadImage() {
+        FirebaseStorage storage;
+        StorageReference storageReference;
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        File folder = AssetUpdater.getCustomAssetsDir(AppSettings.get());
+        String filename = String.format(Locale.getDefault(), "%s_%s.jpg", getString(R.string.app_name), AssetUpdater.FORMAT_MINUTE_FILE.format(new Date(_memeSavetime)));
+        File fullpath = new File(folder, filename);
+        folder.mkdirs();
+
+
+        boolean wasSaved = ContextUtils.get().writeImageToFileJpeg(fullpath, _lastBitmap);
+
+
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            ref.putFile(Uri.fromFile(fullpath))
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss();
+                            Toast.makeText(MemeCreateActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(MemeCreateActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
+
+
+
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

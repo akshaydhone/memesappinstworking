@@ -96,6 +96,7 @@ public class MemeEditorElements implements Serializable {
             _captionConf.setPositionType(positionType);
             _captionConf.setText("");
             // end to-do
+
             _text = _captionConf.getText();
         }
 
@@ -255,6 +256,7 @@ public class MemeEditorElements implements Serializable {
          *
          * @param paddingColor the color
          */
+
         public void setPaddingColor(int paddingColor) {
             _paddingColor = paddingColor;
         }
