@@ -63,6 +63,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.gsantner.memetastic.App;
 import net.gsantner.memetastic.data.MemeData;
@@ -365,9 +366,15 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
             case R.id.action_picture_from_camera: {
-                showCameraDialog();
+                //showCameraDialog();
+                Toast.makeText(app, "Image Capturing", Toast.LENGTH_SHORT).show();
                 return true;
+
             }
+
+
+
+
 
             case R.id.nav_mode_create: {
                 _currentMainMode = 0;
@@ -391,11 +398,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_mode_saved: {
                 _currentMainMode = 2;
                 _emptylistText.setText(R.string.no_memes_saved_description__appspecific);
+
                 if (PermissionChecker.hasExtStoragePerm(this)) {
                     File folder = AssetUpdater.getMemesDir(AppSettings.get());
                     folder.mkdirs();
                     imageList = MemeData.getCreatedMemes();
                 }
+
                 _toolbar.setTitle(R.string.saved);
                 break;
             }

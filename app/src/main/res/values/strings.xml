@@ -19,6 +19,7 @@ work. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
     <string name="saved">Saved</string>
     <string name="favs">Favs</string>
     <string name="create">Create</string>
+    <string name="home">Home</string>
     <string name="hidden">Hidden</string>
     <string name="rows_with_title">Rows with title</string>
     <string name="picture_grid">Picture Grid</string>

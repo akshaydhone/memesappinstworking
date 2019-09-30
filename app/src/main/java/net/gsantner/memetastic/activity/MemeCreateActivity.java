@@ -595,9 +595,6 @@ public class MemeCreateActivity extends AppCompatActivity implements ColorPicker
                         }
                     });
 
-
-
-
         }
     }
 
