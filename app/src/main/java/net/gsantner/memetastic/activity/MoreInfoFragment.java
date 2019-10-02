@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceGroup;
+import android.widget.Toast;
 
 import net.gsantner.memetastic.util.AppSettings;
 import net.gsantner.opoc.format.markdown.SimpleMarkdownParser;
@@ -26,6 +27,8 @@ import net.gsantner.opoc.util.ShareUtil;
 import java.io.IOException;
 import java.util.Locale;
 
+import View.ItemsActivity;
+import View.MainActivity;
 import io.github.gsantner.memetastic.R;
 
 public class MoreInfoFragment extends GsPreferenceFragmentCompat<AppSettings> {
@@ -55,83 +58,12 @@ public class MoreInfoFragment extends GsPreferenceFragmentCompat<AppSettings> {
     public Boolean onPreferenceClicked(Preference preference, String key, int keyResId) {
         ActivityUtils au = new ActivityUtils(getActivity());
         if (isAdded() && preference.hasKey()) {
-            switch (keyToStringResId(preference)) {
-                case R.string.pref_key__more_info__app: {
-                    _cu.openWebpageInExternalBrowser(getString(R.string.app_web_url));
-                    return true;
-                }
-                case R.string.pref_key__more_info__settings: {
-                    au.animateToActivity(SettingsActivity.class, false, 124);
-                    return true;
-                }
-                case R.string.pref_key__more_info__rate_app: {
-                    au.showGooglePlayEntryForThisApp();
-                    return true;
-                }
-
-                case R.string.pref_key__more_info__join_community: {
-                    _cu.openWebpageInExternalBrowser(getString(R.string.app_community_url));
-                    return true;
-                }
-                case R.string.pref_key__more_info__help: {
-                    _cu.openWebpageInExternalBrowser(
-                            String.format("https://gsantner.net/project/%s.html?source=inapp_more_help_faq",
-                                    getString(R.string.app_name_real).toLowerCase()));
-                    return true;
-                }
-                case R.string.pref_key__more_info__donate: {
-                    _cu.openWebpageInExternalBrowser(getString(R.string.app_donate_url));
-                    return true;
-                }
-                case R.string.pref_key__more_info__bug_reports: {
-                    _cu.openWebpageInExternalBrowser(getString(R.string.app_bugreport_url));
-                    return true;
-                }
-                case R.string.pref_key__more_info__translate: {
-                    _cu.openWebpageInExternalBrowser(getString(R.string.app_translate_url));
-                    return true;
-                }
+            switch (keyToStringResId(preference))
+            {
                 case R.string.pref_key__more_info__project_contribution_info: {
-                    _cu.openWebpageInExternalBrowser(getString(R.string.app_contribution_info_url));
-                    return true;
-                }
-                case R.string.pref_key__more_info__source_code: {
-                    _cu.openWebpageInExternalBrowser(getString(R.string.app_source_code_url));
-                    return true;
-                }
-                case R.string.pref_key__more_info__project_license: {
-                    au.showDialogWithRawFileInWebView("license.txt", R.string.project_license);
-                    return true;
-                }
-                case R.string.pref_key__more_info__open_source_licenses: {
-                    try {
-                        au.showDialogWithHtmlTextView(R.string.licenses, new SimpleMarkdownParser().parse(
-                                getResources().openRawResource(R.raw.licenses_3rd_party),
-                                "", SimpleMarkdownParser.FILTER_ANDROID_TEXTVIEW).getHtml());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return true;
-                }
-                case R.string.pref_key__more_info__contributors_public_info: {
-                    try {
-                        au.showDialogWithHtmlTextView(R.string.contributors, new SimpleMarkdownParser().parse(
-                                getResources().openRawResource(R.raw.contributors),
-                                "", SimpleMarkdownParser.FILTER_ANDROID_TEXTVIEW).getHtml());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return true;
-                }
-                case R.string.pref_key__more_info__copy_build_information: {
-                    new ShareUtil(getContext()).setClipboard(preference.getSummary());
-                    SimpleMarkdownParser smp = new SimpleMarkdownParser();
-                    try {
-                        String html = smp.parse(getResources().openRawResource(R.raw.changelog), "", SimpleMarkdownParser.FILTER_ANDROID_TEXTVIEW, SimpleMarkdownParser.FILTER_CHANGELOG).getHtml();
-                        au.showDialogWithHtmlTextView(R.string.changelog, html);
-                    } catch (Exception ex) {
-
-                    }
+                    //Toast.makeText(getContext(),"ImageViewDisplay",Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getContext(), ItemsActivity.class);
+                    startActivity(i);
                     return true;
                 }
             }

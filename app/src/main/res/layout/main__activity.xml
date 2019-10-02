@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<!--
 /*#######################################################
  *
  *   Maintained by Gregor Santner, 2016-
@@ -20,7 +24,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 #########################################################*/
 -->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -51,6 +56,7 @@
             app:tabMode="scrollable">
 
         </android.support.design.widget.TabLayout>
+
 
 
     </android.support.design.widget.AppBarLayout>

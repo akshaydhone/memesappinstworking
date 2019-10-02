@@ -147,7 +147,8 @@ public class MemeItemAdapter extends RecyclerView.Adapter<MemeItemAdapter.ViewHo
                     }
                 }
             }
-        });
+        }
+        );
     }
 
     // gets and returns the count of available items in the grid

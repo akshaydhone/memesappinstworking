@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
@@ -65,6 +66,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import net.gsantner.memetastic.App;
 import net.gsantner.memetastic.data.MemeData;
 import net.gsantner.memetastic.service.AssetUpdater;
@@ -88,6 +95,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import View.ItemsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,6 +110,8 @@ public class MainActivity extends AppCompatActivity
     public static final String IMAGE_POS = "image_pos";
     public static final boolean LOCAL_ONLY_MODE = true;
     public static final boolean DISABLE_ONLINE_ASSETS = true;
+    public  static final int RequestPermissionCode  = 1 ;
+    Intent intent ;
 
     private static boolean _isShowingFullscreenImage = false;
 
@@ -201,7 +211,8 @@ public class MainActivity extends AppCompatActivity
         if (_appSettings.getMemeListViewType() == MemeItemAdapter.VIEW_TYPE__ROWS_WITH_TITLE) {
             RecyclerView.LayoutManager recyclerLinearLayout = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             _recyclerMemeList.setLayoutManager(recyclerLinearLayout);
-        } else {
+        }
+        else {
             int gridColumns = _activityUtils.isInPortraitMode()
                     ? _appSettings.getGridColumnCountPortrait()
                     : _appSettings.getGridColumnCountLandscape();
@@ -271,9 +282,9 @@ public class MainActivity extends AppCompatActivity
         MenuItem navItem = null;
         switch (mainMode) {
             case 0:
-                pos = pos >= 0 ? pos : _tabLayout.getTabCount() - 1;
-                pos = pos < _tabLayout.getTabCount() ? pos : 0;
-                _tabLayout.getTabAt(pos).select();
+
+                Intent i = new Intent(MainActivity.this, ItemsActivity.class);
+                startActivity(i);
                 break;
             case 1:
                 navItem = _bottomNav.getMenu().findItem(R.id.nav_mode_favs);
@@ -348,14 +359,22 @@ public class MainActivity extends AppCompatActivity
         if (!_searchView.isIconified()) {
             _searchView.setIconified(true);
             updateSearchFilter("");
-        } else {
+        }
+
+
+
+        else {
             super.onBackPressed();
         }
+
+
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public boolean handleBarClick(MenuItem item) {
         List<MemeData.Image> imageList = null;
+
+
 
         switch (item.getItemId()) {
             case R.id.action_picture_from_gallery: {
@@ -366,20 +385,17 @@ public class MainActivity extends AppCompatActivity
                 return true;
             }
             case R.id.action_picture_from_camera: {
-                //showCameraDialog();
-                Toast.makeText(app, "Image Capturing", Toast.LENGTH_SHORT).show();
+                showCameraDialog();
+                //intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                //startActivityForResult(intent, 9);
+                //Toast.makeText(app, "Image From Camera", Toast.LENGTH_SHORT).show();
                 return true;
-
             }
 
 
-
-
-
             case R.id.nav_mode_create: {
-                _currentMainMode = 0;
-                selectTab(app.settings.getLastSelectedTab(), app.settings.getDefaultMainMode());
-                _toolbar.setTitle(R.string.app_name);
+                Intent i = new Intent(MainActivity.this, ItemsActivity.class);
+                startActivity(i);
                 break;
             }
             case R.id.nav_mode_favs: {
@@ -392,6 +408,7 @@ public class MainActivity extends AppCompatActivity
                         imageList.add(img);
                     }
                 }
+
                 _toolbar.setTitle(R.string.favs);
                 break;
             }
@@ -404,7 +421,6 @@ public class MainActivity extends AppCompatActivity
                     folder.mkdirs();
                     imageList = MemeData.getCreatedMemes();
                 }
-
                 _toolbar.setTitle(R.string.saved);
                 break;
             }
@@ -422,12 +438,65 @@ public class MainActivity extends AppCompatActivity
                 _toolbar.setTitle(R.string.hidden);
                 break;
             }
+
+
+
             case R.id.nav_more: {
+
                 _currentMainMode = 4;
                 _toolbar.setTitle(R.string.more);
                 break;
+
             }
+
         }
+
+
+
+
+
+
+
+
+
+            //StorageReference filePath = mStorage.child("User_Images").child("gs://uidesignbsteltromat.appspot.com/");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*if (requestCode == 7 && resultCode == RESULT_OK) {
+
+            //Uri mImageUri = data.getData();
+            //user_image.setImageURI(mImageUri);
+
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+
+            user_image.setImageBitmap(bitmap);
+            //StorageReference filePath = mStorage.child("User_Images").child("gs://uidesignbsteltromat.appspot.com/");
+
+
+
+
+
+
+
+        }*/
+
+
+
+
 
         // Change mode
         //_tabLayout.setVisibility(item.getItemId() == R.id.nav_mode_create ? View.VISIBLE : View.GONE);
@@ -437,15 +506,25 @@ public class MainActivity extends AppCompatActivity
             _placeholder.setVisibility(View.GONE);
             _viewPager.setVisibility(View.GONE);
             _moreInfoContainer.setVisibility(View.VISIBLE);
-        } else if (item.getItemId() != R.id.nav_mode_create) {
+        }
+
+        else if (item.getItemId() != R.id.nav_mode_create) {
             _viewPager.setVisibility(View.GONE);
             _placeholder.setVisibility(View.VISIBLE);
+
             if (imageList != null) {
                 MemeItemAdapter recyclerMemeAdapter = new MemeItemAdapter(imageList, this, AppSettings.get().getMemeListViewType());
                 setRecyclerMemeListAdapter(recyclerMemeAdapter);
                 return true;
             }
-        } else {
+
+        }
+
+
+
+
+
+        else {
             _viewPager.setVisibility(View.VISIBLE);
             _placeholder.setVisibility(View.GONE);
         }
@@ -528,24 +607,47 @@ public class MainActivity extends AppCompatActivity
                     onImageTemplateWasChosen(picturePath);
                 }
             }
+
         }
+
+
+
+
 
         if (requestCode == REQUEST_TAKE_CAMERA_PICTURE) {
             if (resultCode == RESULT_OK) {
+
                 onImageTemplateWasChosen(cameraPictureFilepath);
             } else {
                 ActivityUtils.get(this).showSnackBar(R.string.error_picture_selection, false);
             }
+
+
         }
         if (requestCode == REQUEST_SHOW_IMAGE) {
             selectTab(_tabLayout.getSelectedTabPosition(), _currentMainMode);
+        }
+
+
+        if (requestCode == 9 && resultCode == RESULT_OK) {
+
+            //Uri mImageUri = data.getData();
+            //user_image.setImageURI(mImageUri);
+            onImageTemplateWasChosen(cameraPictureFilepath);
+            ///Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+
+            //user_image2.setImageBitmap(bitmap);
+            //StorageReference filePath = mStorage.child("User_Images").child("gs://uidesignbsteltromat.appspot.com/");
+
         }
     }
 
     /**
      * Show the camera picker via intent
      * Source: http://developer.android.com/training/camera/photobasics.html
+     *
      */
+
     public void showCameraDialog() {
         if (!PermissionChecker.doIfPermissionGranted(this)) {
             return;
@@ -576,7 +678,10 @@ public class MainActivity extends AppCompatActivity
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
                 }
                 ActivityUtils.get(this).animateToActivity(takePictureIntent, false, REQUEST_TAKE_CAMERA_PICTURE);
+
             }
+
+
         }
     }
 
@@ -665,7 +770,8 @@ public class MainActivity extends AppCompatActivity
                     public void onClick(DialogInterface dialogInterface, int i) {
                         new AssetUpdater.UpdateThread(MainActivity.this, true).start();
                     }
-                });
+                }
+                );
         dialog.show();
     }
 
@@ -768,9 +874,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void selectCreateMainMode() {
+
         MenuItem createItem = _bottomNav.getMenu().findItem(R.id.nav_mode_create);
         onNavigationItemSelected(createItem);
         createItem.setChecked(true);
+
     }
 
     public void recreateFragmentsAfterUnhiding() {
