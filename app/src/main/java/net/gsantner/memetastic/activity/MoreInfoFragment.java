@@ -62,9 +62,9 @@ public class MoreInfoFragment extends GsPreferenceFragmentCompat<AppSettings> {
             {
                 case R.string.pref_key__more_info__project_contribution_info: {
                     //Toast.makeText(getContext(),"ImageViewDisplay",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getContext(), ItemsActivity.class);
-                    startActivity(i);
-                    return true;
+                    //Intent i = new Intent(getContext(), ItemsActivity.class);
+                    //startActivity(i);
+                    //return true;
                 }
             }
         }

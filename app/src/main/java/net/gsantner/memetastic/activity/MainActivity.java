@@ -27,7 +27,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Build;
@@ -42,6 +41,7 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
@@ -66,13 +66,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
 import net.gsantner.memetastic.App;
+import net.gsantner.memetastic.activity.ui.home.HomeFragment;
 import net.gsantner.memetastic.data.MemeData;
 import net.gsantner.memetastic.service.AssetUpdater;
 import net.gsantner.memetastic.ui.GridDecoration;
@@ -102,6 +97,8 @@ import butterknife.ButterKnife;
 import io.github.gsantner.memetastic.R;
 
 public class MainActivity extends AppCompatActivity
+
+
         implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, BottomNavigationView.OnNavigationItemSelectedListener {
     public static final int REQUEST_LOAD_GALLERY_IMAGE = 50;
     public static final int REQUEST_TAKE_CAMERA_PICTURE = 51;
@@ -122,8 +119,11 @@ public class MainActivity extends AppCompatActivity
     BottomNavigationView _bottomNav;
     private MenuItem _lastBottomMenuItem;
 
+
+
     @BindView(R.id.main__tabs)
     TabLayout _tabLayout;
+
 
     @BindView(R.id.main__more_info_fragment_container)
     LinearLayout _moreInfoContainer;
@@ -131,8 +131,8 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.main_activity__placeholder)
     FrameLayout _placeholder;
 
-    @BindView(R.id.main_activity__view_pager)
-    ViewPager _viewPager;
+    //@BindView(R.id.main_activity__view_pager)
+    //ViewPager _viewPager;
 
     @BindView(R.id.main__activity__recycler_view)
     RecyclerView _recyclerMemeList;
@@ -233,9 +233,9 @@ public class MainActivity extends AppCompatActivity
         }
         // END
 
-        _viewPager.setOffscreenPageLimit(5);
-        _viewPager.setAdapter(new MemePagerAdapter(getSupportFragmentManager(), _tagKeys.length, _tagValues));
-        _tabLayout.setupWithViewPager(_viewPager);
+        //_viewPager.setOffscreenPageLimit(5);
+        // _viewPager.setAdapter(new MemePagerAdapter(getSupportFragmentManager(), _tagKeys.length, _tagValues));
+        // _tabLayout.setupWithViewPager(_viewPager);
         selectTab(app.settings.getLastSelectedTab(), app.settings.getDefaultMainMode());
         _infoBarProgressBar.getProgressDrawable().setColorFilter(ContextCompat.getColor(this, R.color.accent), PorterDuff.Mode.SRC_IN);
 
@@ -280,28 +280,36 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("ConstantConditions")
     private void selectTab(int pos, int mainMode) {
         MenuItem navItem = null;
+        Fragment selectedFragment=null;
         switch (mainMode) {
             case 0:
-
-                Intent i = new Intent(MainActivity.this, ItemsActivity.class);
-                startActivity(i);
+               selectedFragment=new FirebaseFragment();
+                //Intent i = new Intent(MainActivity.this, ItemsActivity.class);
+                //startActivity(i);
                 break;
             case 1:
-                navItem = _bottomNav.getMenu().findItem(R.id.nav_mode_favs);
+                navItem =  _bottomNav.getMenu().findItem(R.id.nav_mode_favs);
                 break;
             case 2:
                 navItem = _bottomNav.getMenu().findItem(R.id.nav_mode_saved);
                 break;
             case 3:
-                navItem = _bottomNav.getMenu().findItem(R.id.nav_mode_hidden);
+                navItem =  _bottomNav.getMenu().findItem(R.id.nav_mode_hidden);
                 break;
             case 4:
-                navItem = _bottomNav.getMenu().findItem(R.id.nav_more);
+                navItem =  _bottomNav.getMenu().findItem(R.id.nav_more);
                 break;
+
+
+
         }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.main__more_info_fragment,selectedFragment).commit();
+
 
         if (navItem != null) {
             navItem.setChecked(true);
+
             onNavigationItemSelected(navItem);
         }
     }
@@ -311,6 +319,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         new AndroidSupportMeWrapper(this).mainOnResume();
         if (MainActivity.LOCAL_ONLY_MODE) {
+
             _tabLayout.setVisibility(View.GONE);
         }
         if (_isShowingFullscreenImage) {
@@ -333,16 +342,19 @@ public class MainActivity extends AppCompatActivity
                     m.invoke(null, 0);
                 }
             }
-        } catch (Exception ignored) {
         }
-        _viewPager.addOnPageChangeListener(this);
+
+        catch (Exception ignored) {
+        }
+        // _viewPager.addOnPageChangeListener(this);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(_localBroadcastReceiver);
-        _viewPager.removeOnPageChangeListener(this);
+        //_viewPager.removeOnPageChangeListener(this);
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -361,24 +373,21 @@ public class MainActivity extends AppCompatActivity
             updateSearchFilter("");
         }
 
-
-
         else {
             super.onBackPressed();
         }
-
-
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public boolean handleBarClick(MenuItem item) {
         List<MemeData.Image> imageList = null;
-
-
+        Fragment selectedfragment=null;
 
         switch (item.getItemId()) {
+
             case R.id.action_picture_from_gallery: {
-                if (PermissionChecker.doIfPermissionGranted(this)) {
+                if (PermissionChecker.doIfPermissionGranted(this))
+                {
                     Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     ActivityUtils.get(this).animateToActivity(i, false, REQUEST_LOAD_GALLERY_IMAGE);
                 }
@@ -394,8 +403,11 @@ public class MainActivity extends AppCompatActivity
 
 
             case R.id.nav_mode_create: {
-                Intent i = new Intent(MainActivity.this, ItemsActivity.class);
-                startActivity(i);
+               // _currentMainMode = 0;
+                //Intent i = new Intent(MainActivity.this, ItemsActivity.class);
+               // startActivity(i);
+
+                ///selectedfragment=new NotificationFragment();
                 break;
             }
             case R.id.nav_mode_favs: {
@@ -408,7 +420,6 @@ public class MainActivity extends AppCompatActivity
                         imageList.add(img);
                     }
                 }
-
                 _toolbar.setTitle(R.string.favs);
                 break;
             }
@@ -442,13 +453,12 @@ public class MainActivity extends AppCompatActivity
 
 
             case R.id.nav_more: {
-
                 _currentMainMode = 4;
                 _toolbar.setTitle(R.string.more);
                 break;
 
             }
-
+//getSupportFragmentManager().beginTransaction().replace(R.id.meme_fragment__recycler_view,selectedfragment).commit();
         }
 
 
@@ -459,7 +469,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-            //StorageReference filePath = mStorage.child("User_Images").child("gs://uidesignbsteltromat.appspot.com/");
+        //StorageReference filePath = mStorage.child("User_Images").child("gs://uidesignbsteltromat.appspot.com/");
 
 
 
@@ -504,12 +514,12 @@ public class MainActivity extends AppCompatActivity
         _moreInfoContainer.setVisibility(View.GONE);
         if (item.getItemId() == R.id.nav_more) {
             _placeholder.setVisibility(View.GONE);
-            _viewPager.setVisibility(View.GONE);
+            // _viewPager.setVisibility(View.GONE);
             _moreInfoContainer.setVisibility(View.VISIBLE);
         }
 
         else if (item.getItemId() != R.id.nav_mode_create) {
-            _viewPager.setVisibility(View.GONE);
+            // _viewPager.setVisibility(View.GONE);
             _placeholder.setVisibility(View.VISIBLE);
 
             if (imageList != null) {
@@ -525,7 +535,7 @@ public class MainActivity extends AppCompatActivity
 
 
         else {
-            _viewPager.setVisibility(View.VISIBLE);
+            // _viewPager.setVisibility(View.VISIBLE);
             _placeholder.setVisibility(View.GONE);
         }
 
@@ -539,7 +549,23 @@ public class MainActivity extends AppCompatActivity
         _emptylistLayout.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         _recyclerMemeList.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
     }
+    public  void favorite(){
+        List<MemeData.Image> imageList = null;
+        _currentMainMode = 1;
+        imageList = new ArrayList<>();
+        _emptylistText.setText(R.string.no_favourites_description__appspecific);
+        for (String fav : app.settings.getFavoriteMemeTemplates()) {
+            MemeData.Image img = MemeData.findImage(new File(fav));
+            if (img != null) {
+                imageList.add(img);
+            }
+        }
 
+
+        _toolbar.setTitle(R.string.favs);
+
+
+    }
 
     private void updateSearchFilter(String newFilter) {
         if (_currentMainMode != 0) {
@@ -548,7 +574,7 @@ public class MainActivity extends AppCompatActivity
                 ((MemeItemAdapter) _recyclerMemeList.getAdapter()).setFilter(newFilter);
             }
         } else {
-            MemeFragment page = ((MemeFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.main_activity__view_pager + ":" + _viewPager.getCurrentItem()));
+            MemeFragment page = ((MemeFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.main_activity__view_pager + ":" ));
             if (page != null && page._recyclerMemeList.getAdapter() != null) {
                 ((MemeItemAdapter) page._recyclerMemeList.getAdapter()).setFilter(newFilter);
             }
@@ -576,6 +602,8 @@ public class MainActivity extends AppCompatActivity
                         if (!TextUtils.isEmpty(picturePath)) {
                             break;
                         }
+
+
                     }
                     cursor.close();
                 }
@@ -587,7 +615,6 @@ public class MainActivity extends AppCompatActivity
                         if (parcelFileDescriptor != null) {
                             FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
                             FileInputStream input = new FileInputStream(fileDescriptor);
-
                             // Create temporary file in cache directory
                             picturePath = File.createTempFile("image", "tmp", getCacheDir()).getAbsolutePath();
                             FileUtils.writeFile(
@@ -602,8 +629,10 @@ public class MainActivity extends AppCompatActivity
 
                 // Finally check if we got something
                 if (picturePath == null) {
+
                     ActivityUtils.get(this).showSnackBar(R.string.error_couldnot_load_picture_from_storage, false);
-                } else {
+                }
+                else {
                     onImageTemplateWasChosen(picturePath);
                 }
             }
@@ -680,7 +709,6 @@ public class MainActivity extends AppCompatActivity
                 ActivityUtils.get(this).animateToActivity(takePictureIntent, false, REQUEST_TAKE_CAMERA_PICTURE);
 
             }
-
 
         }
     }
@@ -766,11 +794,14 @@ public class MainActivity extends AppCompatActivity
                 .setMessage(R.string.download_latest_assets_message__appspecific)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        new AssetUpdater.UpdateThread(MainActivity.this, true).start();
-                    }
-                }
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                new AssetUpdater.UpdateThread(MainActivity.this, true).start();
+
+                                // Toast.makeText(getApplicationContext(),"Image successfully loaded",Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
                 );
         dialog.show();
     }
@@ -882,7 +913,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void recreateFragmentsAfterUnhiding() {
-        _viewPager.getAdapter().notifyDataSetChanged();
+        //_viewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override

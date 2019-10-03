@@ -61,7 +61,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
                     android:inputType="text"
-                    android:hint="@string/enter_caption" />
+                    android:hint="@string/enter_caption"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:windowSoftInputMode="adjustUnspecified">
+
+                <requestFocus/>
+                </EditText>
+
 
                 <ImageButton
                     android:id="@+id/settings_caption"

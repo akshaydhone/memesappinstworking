@@ -31,7 +31,9 @@
             android:label="@string/create_meme__appspecific"
             android:parentActivityName="net.gsantner.memetastic.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.EDIT" />
@@ -44,6 +46,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.gsantner.memetastic.activity.MainActivity" />
+
         </activity> <!-- Activities -->
         <activity
             android:name="net.gsantner.memetastic.activity.SettingsActivity"
@@ -79,8 +82,10 @@
             android:parentActivityName="View.MainActivity"></activity>
         <activity
             android:name="View.ItemsActivity"
-            android:label="List Page "
-            android:parentActivityName="View.MainActivity" />
+
+
+            android:parentActivityName="View.MainActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name="View.UploadActivity"
             android:label="Upload Page "
