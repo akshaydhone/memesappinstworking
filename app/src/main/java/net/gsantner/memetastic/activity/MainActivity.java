@@ -677,7 +677,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (requestCode == REQUEST_SHOW_IMAGE) {
             //selectTab(_tabLayout.getSelectedTabPosition(), _currentMainMode);
-            this.startActivity(new Intent(MainActivity.this,ImageViewActivity.class));
+            this.startActivity(new Intent(MainActivity.this,MainActivity.class));
 
 
         }
