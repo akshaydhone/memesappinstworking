@@ -42,6 +42,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
@@ -63,6 +64,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,10 +98,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.gsantner.memetastic.R;
 
-public class MainActivity extends AppCompatActivity
-
-
-        implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener, BottomNavigationView.OnNavigationItemSelectedListener {
     public static final int REQUEST_LOAD_GALLERY_IMAGE = 50;
     public static final int REQUEST_TAKE_CAMERA_PICTURE = 51;
     public static final int REQUEST_SHOW_IMAGE = 52;
@@ -119,8 +118,6 @@ public class MainActivity extends AppCompatActivity
     BottomNavigationView _bottomNav;
     private MenuItem _lastBottomMenuItem;
 
-
-
     @BindView(R.id.main__tabs)
     TabLayout _tabLayout;
 
@@ -128,11 +125,12 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.main__more_info_fragment_container)
     LinearLayout _moreInfoContainer;
 
+
     @BindView(R.id.main_activity__placeholder)
     FrameLayout _placeholder;
 
-    //@BindView(R.id.main_activity__view_pager)
-    //ViewPager _viewPager;
+    // @BindView(R.id.main_activity__view_pager)
+    // LinearLayout _viewPager;
 
     @BindView(R.id.main__activity__recycler_view)
     RecyclerView _recyclerMemeList;
@@ -281,30 +279,39 @@ public class MainActivity extends AppCompatActivity
     private void selectTab(int pos, int mainMode) {
         MenuItem navItem = null;
         Fragment selectedFragment=null;
+     //RelativeLayout container = (RelativeLayout) findViewById(R.id.fragfirebase);
+      // container.setVisibility(View.GONE);
+
         switch (mainMode) {
             case 0:
-               selectedFragment=new FirebaseFragment();
-                //Intent i = new Intent(MainActivity.this, ItemsActivity.class);
+                selectedFragment=new FirebaseFragment();
+               // container.setVisibility(View.VISIBLE);
+                //Intent i = new Intent(MainActivity.this, FirebaseFragment.class);
                 //startActivity(i);
                 break;
             case 1:
                 navItem =  _bottomNav.getMenu().findItem(R.id.nav_mode_favs);
+               // container.setVisibility(View.GONE);
+
                 break;
             case 2:
                 navItem = _bottomNav.getMenu().findItem(R.id.nav_mode_saved);
+                //container.setVisibility(View.GONE);
                 break;
             case 3:
                 navItem =  _bottomNav.getMenu().findItem(R.id.nav_mode_hidden);
+                //container.setVisibility(View.GONE);
                 break;
             case 4:
                 navItem =  _bottomNav.getMenu().findItem(R.id.nav_more);
+                //container.setVisibility(View.GONE);
                 break;
-
-
-
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.main__more_info_fragment,selectedFragment).commit();
+        FragmentManager fm=getSupportFragmentManager();
+
+        fm.beginTransaction().replace(R.id.fragmentcontainer,selectedFragment).commit();
+
 
 
         if (navItem != null) {
@@ -347,7 +354,6 @@ public class MainActivity extends AppCompatActivity
         catch (Exception ignored) {
         }
         // _viewPager.addOnPageChangeListener(this);
-
     }
 
     @Override
@@ -372,7 +378,6 @@ public class MainActivity extends AppCompatActivity
             _searchView.setIconified(true);
             updateSearchFilter("");
         }
-
         else {
             super.onBackPressed();
         }
@@ -382,6 +387,9 @@ public class MainActivity extends AppCompatActivity
     public boolean handleBarClick(MenuItem item) {
         List<MemeData.Image> imageList = null;
         Fragment selectedfragment=null;
+        RelativeLayout container = (RelativeLayout) findViewById(R.id.fragfirebase);
+        container.setVisibility(View.GONE);
+
 
         switch (item.getItemId()) {
 
@@ -403,10 +411,10 @@ public class MainActivity extends AppCompatActivity
 
 
             case R.id.nav_mode_create: {
-               // _currentMainMode = 0;
+                // _currentMainMode = 0;
                 //Intent i = new Intent(MainActivity.this, ItemsActivity.class);
-               // startActivity(i);
-
+                // startActivity(i);
+                container.setVisibility(View.VISIBLE);
                 ///selectedfragment=new NotificationFragment();
                 break;
             }
@@ -421,6 +429,10 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
                 _toolbar.setTitle(R.string.favs);
+                container.setVisibility(View.GONE);
+
+                //container.setVisibility(View.GONE);
+
                 break;
             }
             case R.id.nav_mode_saved: {
@@ -433,6 +445,9 @@ public class MainActivity extends AppCompatActivity
                     imageList = MemeData.getCreatedMemes();
                 }
                 _toolbar.setTitle(R.string.saved);
+                container.setVisibility(View.GONE);
+               // container.setVisibility(View.GONE);
+
                 break;
             }
 
@@ -447,6 +462,8 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
                 _toolbar.setTitle(R.string.hidden);
+                container.setVisibility(View.GONE);
+                //container.setVisibility(View.GONE);
                 break;
             }
 
@@ -455,6 +472,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_more: {
                 _currentMainMode = 4;
                 _toolbar.setTitle(R.string.more);
+                container.setVisibility(View.GONE);
+                //container.setVisibility(View.GONE);
+
                 break;
 
             }
@@ -512,10 +532,12 @@ public class MainActivity extends AppCompatActivity
         //_tabLayout.setVisibility(item.getItemId() == R.id.nav_mode_create ? View.VISIBLE : View.GONE);
 
         _moreInfoContainer.setVisibility(View.GONE);
+
         if (item.getItemId() == R.id.nav_more) {
             _placeholder.setVisibility(View.GONE);
             // _viewPager.setVisibility(View.GONE);
             _moreInfoContainer.setVisibility(View.VISIBLE);
+
         }
 
         else if (item.getItemId() != R.id.nav_mode_create) {
@@ -654,7 +676,10 @@ public class MainActivity extends AppCompatActivity
 
         }
         if (requestCode == REQUEST_SHOW_IMAGE) {
-            selectTab(_tabLayout.getSelectedTabPosition(), _currentMainMode);
+            //selectTab(_tabLayout.getSelectedTabPosition(), _currentMainMode);
+            this.startActivity(new Intent(MainActivity.this,ImageViewActivity.class));
+
+
         }
 
 
@@ -921,7 +946,6 @@ public class MainActivity extends AppCompatActivity
         outState.putInt(BOTTOM_NAV_POSITION, _currentMainMode);
         super.onSaveInstanceState(outState);
     }
-
 
 
 }

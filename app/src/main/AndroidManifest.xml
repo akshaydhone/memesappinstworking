@@ -37,7 +37,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.EDIT" />
-
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="image/*" />
@@ -70,12 +69,18 @@
         </activity>
         <activity
             android:name="net.gsantner.memetastic.activity.ImageViewActivity"
-            android:parentActivityName="net.gsantner.memetastic.activity.MainActivity"
+            android:parentActivityName="net.gsantner.memetastic.activity.MoreInfoActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.gsantner.memetastic.activity.MainActivity" />
+                android:value="net.gsantner.memetastic.activity.MoreInfoActivity" />
         </activity>
+
+        <activity
+            android:name="net.gsantner.memetastic.activity.FirebaseFragment"
+            android:label="FirebaseImages "
+            android:parentActivityName="net.gsantner.memetastic.activity.FirebaseFragment"></activity>
+
         <activity
             android:name="View.MainActivity"
             android:label="FirebaseImages "

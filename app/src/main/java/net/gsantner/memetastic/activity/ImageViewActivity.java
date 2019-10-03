@@ -20,6 +20,7 @@
 #########################################################*/
 package net.gsantner.memetastic.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
@@ -72,6 +73,7 @@ public class ImageViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (PermissionChecker.hasExtStoragePerm(this)) {
             File folder = AssetUpdater.getMemesDir(AppSettings.get());
@@ -108,13 +110,15 @@ public class ImageViewActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.imageview__menu, menu);
-        // menu.findItem(R.id.action_delete).setVisible(_imageFile != null);
+         menu.findItem(R.id.action_delete).setVisible(_imageFile != null);
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        finish();
+        this.startActivity(new Intent(ImageViewActivity.this,FirebaseFragment.class));
+
+        return;
     }
 
     @Override
