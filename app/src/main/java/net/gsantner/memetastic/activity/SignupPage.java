@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,11 +20,14 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import io.github.gsantner.memetastic.R;
 
 public class SignupPage extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText email,password,name,bio,fullname;
+    private TextView tvForgot;
     private Button signin, signup,signuppage;
     FirebaseUser user;
     static String LoggedIn_User_Email;
@@ -54,6 +58,17 @@ public class SignupPage extends AppCompatActivity {
         name = (EditText)findViewById(R.id.etName);
         bio=(EditText)findViewById(R.id.etBio);
         fullname=(EditText)findViewById(R.id.etFullName);
+        tvForgot=(TextView)findViewById(R.id.tvForgot);
+
+
+
+        tvForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getApplicationContext(),ForgotPassword.class);
+                startActivity(i);
+            }
+        });
 
         signuppage.setOnClickListener(new View.OnClickListener() {
             @Override
