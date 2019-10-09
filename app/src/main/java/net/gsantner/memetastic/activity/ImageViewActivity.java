@@ -117,7 +117,6 @@ public class ImageViewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         this.startActivity(new Intent(ImageViewActivity.this,FirebaseFragment.class));
-
         return;
     }
 

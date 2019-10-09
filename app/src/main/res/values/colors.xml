@@ -63,6 +63,13 @@
     <color name="comic_yellow">#F8D507</color>>
     <color name="comic_red">#E42E45</color>>
     <color name="comic_vanilla">#FFF3BE</color>>
+    <color name="colorWhite">#ffffff</color>
     <color name="comic_blue">#32576A</color>
     <color name="black_alpha_40">#90000000</color>
+    <color name="colorPurple">#D1F99F  </color>
+    <color name="colorPurpleT">#64983cff</color>
+    <color name="colorBlue">#9FF9F9  </color>
+    <color name="colorBlueT">#642fb4ff</color>
+    <color name="gradientStart">#19AA8B</color>
+    <color name="gradientStop">#23A7D8</color>
 </resources>

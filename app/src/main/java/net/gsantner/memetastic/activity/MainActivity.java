@@ -56,6 +56,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,6 +68,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import net.gsantner.memetastic.App;
 import net.gsantner.memetastic.activity.ui.home.HomeFragment;
@@ -108,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final boolean DISABLE_ONLINE_ASSETS = true;
     public  static final int RequestPermissionCode  = 1 ;
     Intent intent ;
+    private FirebaseAuth mAuth;
 
     private static boolean _isShowingFullscreenImage = false;
 
@@ -180,6 +185,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         setContentView(R.layout.main__activity);
+        mAuth = FirebaseAuth.getInstance(); // important Call
+
+        if(mAuth.getCurrentUser() == null)
+        {
+            //User NOT logged In
+            this.finish();
+            startActivity(new Intent(getApplicationContext(),LoginPage.class));
+        }
+
+
+
+        FirebaseUser user = mAuth.getCurrentUser();
+
 
         // Bind UI
         app = (App) getApplication();
@@ -476,6 +494,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //container.setVisibility(View.GONE);
 
                 break;
+
+            }
+
+
+
+
+                case R.id.signout:{
+                    mAuth.signOut();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), LoginPage.class));
+                    break;
 
             }
 //getSupportFragmentManager().beginTransaction().replace(R.id.meme_fragment__recycler_view,selectedfragment).commit();
