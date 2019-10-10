@@ -25,14 +25,16 @@ public class CreateGroup extends AppCompatActivity {
     ListView list_of_members;
     FirebaseDatabase database;
     DatabaseReference ref;
-    ArrayList<User>list;
-    ArrayAdapter<User>adapter;
+    ArrayList<String>list;
+    ArrayAdapter<String>adapter;
     User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+        getSupportActionBar().setTitle("Create Group");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
   user=new User();
 
@@ -43,16 +45,16 @@ public class CreateGroup extends AppCompatActivity {
         ref=database.getReference("Users");
 
         list=new ArrayList<>();
-        adapter=new ArrayAdapter<User>(this,R.layout.user_info,R.id.users,list);
+        adapter=new ArrayAdapter<String>(this,R.layout.user_info,R.id.users,list);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds:dataSnapshot.getChildren())
                 {
            user=ds.getValue(User.class);
-             list.add(user);
+             list.add(user.getName());
                 }
-list_of_members.setAdapter(adapter);
+       list_of_members.setAdapter(adapter);
 
             }
 

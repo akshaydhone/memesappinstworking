@@ -566,7 +566,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //_placeholder.setVisibility(View.GONE);
             // _viewPager.setVisibility(View.GONE);
             //_moreInfoContainer.setVisibility(View.VISIBLE);
-            Intent i=new Intent(getApplicationContext(),MyProfilePage.class);
+            Intent i=new Intent(getApplicationContext(),CreateGroup.class);
             startActivity(i);
 
         }
