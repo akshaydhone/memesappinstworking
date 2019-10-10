@@ -563,9 +563,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         _moreInfoContainer.setVisibility(View.GONE);
 
         if (item.getItemId() == R.id.nav_more) {
-            _placeholder.setVisibility(View.GONE);
+            //_placeholder.setVisibility(View.GONE);
             // _viewPager.setVisibility(View.GONE);
-            _moreInfoContainer.setVisibility(View.VISIBLE);
+            //_moreInfoContainer.setVisibility(View.VISIBLE);
+            Intent i=new Intent(getApplicationContext(),MyProfilePage.class);
+            startActivity(i);
 
         }
 
