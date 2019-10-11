@@ -1,5 +1,6 @@
 package net.gsantner.memetastic.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +46,9 @@ public class CreateGroup extends AppCompatActivity {
         database=FirebaseDatabase.getInstance();
         ref=database.getReference("Users");
 
+
+
+
         list=new ArrayList<>();
         adapter=new ArrayAdapter<String>(this,R.layout.user_info,R.id.users,list);
         ref.addValueEventListener(new ValueEventListener() {
@@ -55,12 +60,9 @@ public class CreateGroup extends AppCompatActivity {
              list.add(user.getName());
                 }
        list_of_members.setAdapter(adapter);
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 

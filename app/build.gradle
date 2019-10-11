@@ -129,8 +129,18 @@ dependencies {
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'
     implementation 'android.arch.navigation:navigation-ui:1.0.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
+
+    implementation 'id.zelory:compressor:2.1.0'
+    implementation 'com.google.android.exoplayer:exoplayer:2.6.1'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.assertj:assertj-core:3.13.1'
+
+
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+    implementation 'com.mikhaellopez:circularimageview:3.1.0'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.github.bumptech.glide:glide:4.5.0'
 
     // Android standard libs
     implementation "com.android.support:design:${version_library_appcompat}"
