@@ -323,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case 4:
                 navItem =  _bottomNav.getMenu().findItem(R.id.nav_more);
                 //container.setVisibility(View.GONE);
+
                 break;
         }
 
@@ -566,7 +567,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //_placeholder.setVisibility(View.GONE);
             // _viewPager.setVisibility(View.GONE);
             //_moreInfoContainer.setVisibility(View.VISIBLE);
-            Intent i=new Intent(getApplicationContext(),CreateGroup.class);
+            //Intent i=new Intent(getApplicationContext(),CreateGroup.class);
+            //Intent i=new Intent(getApplicationContext(),CreateGroup.class);
+            Intent i=new Intent(getApplicationContext(),ProfileAct.class);
             startActivity(i);
 
         }
@@ -574,6 +577,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (item.getItemId() != R.id.nav_mode_create) {
             // _viewPager.setVisibility(View.GONE);
             _placeholder.setVisibility(View.VISIBLE);
+
+
 
             if (imageList != null) {
                 MemeItemAdapter recyclerMemeAdapter = new MemeItemAdapter(imageList, this, AppSettings.get().getMemeListViewType());

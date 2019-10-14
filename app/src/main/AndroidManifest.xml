@@ -12,13 +12,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="net.gsantner.memetastic.activity.CreateGroup"
+        <activity android:name="net.gsantner.memetastic.activity.ProfileAct"
             android:parentActivityName="net.gsantner.memetastic.activity.MainActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" ></activity>
+        <activity
+            android:name="net.gsantner.memetastic.activity.CreateGroup"
+            android:parentActivityName="net.gsantner.memetastic.activity.MainActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="net.gsantner.memetastic.activity.MyProfilePage"
             android:parentActivityName="net.gsantner.memetastic.activity.MainActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="net.gsantner.memetastic.activity.ForgotPassword"
             android:parentActivityName="net.gsantner.memetastic.activity.SignupPage"
@@ -131,18 +135,18 @@
         </provider>
     </application>
     <uses-feature
-        android:name="android.hardware.camera.autofocus"
-        android:required="false" />
-
-    <uses-feature
         android:name="android.hardware.camera.any"
         android:required="true" />
-    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

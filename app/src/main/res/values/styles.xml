@@ -70,6 +70,14 @@
         <item name="colorControlActivated">@color/secondary_text</item>
     </style>
 
+
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">5dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
     <style name="AppTheme.MemeCreatorCaptionText">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
         <item name="android:textSize" tools:ignore="SpUsage">18dp</item>
