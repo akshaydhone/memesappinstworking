@@ -308,7 +308,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //startActivity(i);
                 break;
             case 1:
-                navItem =  _bottomNav.getMenu().findItem(R.id.nav_mode_favs);
+        navItem =  _bottomNav.getMenu().findItem(R.id.nav_mode_favs);
+                //selectedFragment=new ProfileAct();
                // container.setVisibility(View.GONE);
 
                 break;
@@ -450,7 +451,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 _toolbar.setTitle(R.string.favs);
                 container.setVisibility(View.GONE);
 
-                //container.setVisibility(View.GONE);
+
 
                 break;
             }
