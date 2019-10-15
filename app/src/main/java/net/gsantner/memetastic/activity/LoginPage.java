@@ -39,8 +39,6 @@ public class LoginPage extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
         getSupportActionBar().setTitle("SignUp Page");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
         //OneSignal.startInit(this).init();
 
         if (mDatabase == null) {
@@ -48,6 +46,8 @@ public class LoginPage extends AppCompatActivity {
             //mDatabase.setPersistenceEnabled(true);
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         }
+
+
 
 
 
@@ -63,6 +63,10 @@ public class LoginPage extends AppCompatActivity {
         name = (EditText)findViewById(R.id.etName);
         bio=(EditText)findViewById(R.id.etBio);
         fullname=(EditText)findViewById(R.id.etFullName);
+
+
+
+
 
 
         /*if(mAuth.getCurrentUser() != null)

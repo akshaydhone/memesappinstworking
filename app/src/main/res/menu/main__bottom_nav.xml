@@ -25,8 +25,8 @@
 
     <item
         android:id="@+id/nav_mode_favs"
-        android:icon="@drawable/ic_star_black_32dp"
-        android:title="@string/favs" />
+        android:icon="@drawable/ic_search_blackk_24dp"
+        android:title="Search" />
 
     <item
         android:id="@+id/nav_mode_saved"

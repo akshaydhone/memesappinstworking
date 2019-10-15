@@ -6,6 +6,7 @@ public class Users {
     private String Bio;
     private String UserName;
     private String Name;
+    private String Image_Url;
     private String Email;
 
 
@@ -13,12 +14,14 @@ public class Users {
     }
 
 
-    public Users(String id, String bio, String username, String name, String email) {
+
+    public Users(String id, String bio, String username, String name, String email,String image_url) {
         this.id = id;
         Bio = bio;
         UserName = username;
         Name = name;
         Email = email;
+        Image_Url=image_url;
     }
 
 
@@ -61,4 +64,19 @@ public class Users {
     public void setEmail(String email) {
         Email = email;
     }
+
+    public String getImage_Url() {
+        return Image_Url;
+    }
+
+
+
+    public void setImage_Url(String image_Url) {
+        Image_Url = image_Url;
+    }
+
+
+
+
+
 }

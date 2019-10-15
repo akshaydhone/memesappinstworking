@@ -439,19 +439,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.nav_mode_favs: {
-                _currentMainMode = 1;
-                imageList = new ArrayList<>();
-                _emptylistText.setText(R.string.no_favourites_description__appspecific);
-                for (String fav : app.settings.getFavoriteMemeTemplates()) {
-                    MemeData.Image img = MemeData.findImage(new File(fav));
-                    if (img != null) {
-                        imageList.add(img);
-                    }
-                }
-                _toolbar.setTitle(R.string.favs);
-                container.setVisibility(View.GONE);
+               // _currentMainMode = 1;
+               // imageList = new ArrayList<>();
+               // _emptylistText.setText(R.string.no_favourites_description__appspecific);
+               // for (String fav : app.settings.getFavoriteMemeTemplates()) {
+                  //  MemeData.Image img = MemeData.findImage(new File(fav));
+                  //  if (img != null) {
+                    //    imageList.add(img);
+                   // }
+                //}
+               // _toolbar.setTitle(R.string.favs);
+               // container.setVisibility(View.GONE);
 
-
+                Intent i=new Intent(getApplicationContext(),MySearchFoll.class);
+                startActivity(i);
 
                 break;
             }
@@ -466,7 +467,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 _toolbar.setTitle(R.string.saved);
                 container.setVisibility(View.GONE);
-               // container.setVisibility(View.GONE);
+
 
                 break;
             }
