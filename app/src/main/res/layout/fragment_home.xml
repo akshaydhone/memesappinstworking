@@ -1,50 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="net.gsantner.memetastic.activity.ui.home.HomeFragment"
-    tools:showIn="@layout/main__activity">
+>
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="@android:style/Widget.Holo.Light.ProgressBar"
+        android:layout_width="120dp"
+        android:layout_height="129dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.084" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recent Activities"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#000" />
-    <ProgressBar
-        android:id="@+id/myDataLoaderProgressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:indeterminateBehavior="cycle"
-        android:visibility="gone" />
+        android:layout_marginTop="168dp"
+        android:text="No posts? create your own now."
+        android:textSize="25sp"
+        android:fontFamily="@font/roboto_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ListView
+        android:id="@+id/mainListView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mRecyclerView"
-        android:layout_weight="0.5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    </ListView>
 
-
-    <!--  <include layout="@layout/main__content"
-         android:id="@+id/menubottom"/>  -->
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-
-        app:itemTextColor="#000"
-        app:menu="@menu/main__bottom_nav" />
-
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -28,7 +28,7 @@ public class snippet_top_profile extends AppCompatActivity  {
         textView6=(findViewById(R.id.textView6));
         textView7=(findViewById(R.id.textView7));
         textView8=(findViewById(R.id.textView8));
-        desc=(TextView)findViewById(R.id.desc);
+       // desc=(TextView)findViewById(R.id.desc);
         //getSupportActionBar().setTitle("TopProfile");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
