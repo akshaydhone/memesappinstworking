@@ -177,7 +177,8 @@
 
         <activity android:name="com.dannproductions.instaclone.Profile.ViewPostActivity" />
         <activity android:name="com.dannproductions.instaclone.Utils.CommentsActivity" />
-        <activity android:name="com.dannproductions.instaclone.Utils.ViewProfileActivity" />
+        <activity android:name="com.dannproductions.instaclone.Utils.ViewProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.dannproductions.instaclone.Utils.VideoPlayerActivity"></activity>
 
         <meta-data
