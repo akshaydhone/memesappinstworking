@@ -38,6 +38,7 @@ import android.provider.MediaStore;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -69,11 +70,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dannproductions.instaclone.Home.HomeActivity;
+import com.dannproductions.instaclone.Home.HomeFragment;
+import com.dannproductions.instaclone.Search.SearchActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import net.gsantner.memetastic.App;
-import net.gsantner.memetastic.activity.ui.home.HomeFragment;
 import net.gsantner.memetastic.data.MemeData;
 import net.gsantner.memetastic.service.AssetUpdater;
 import net.gsantner.memetastic.ui.GridDecoration;
@@ -304,8 +307,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case 0:
                 selectedFragment=new FirebaseFragment();
                // container.setVisibility(View.VISIBLE);
-                //Intent i = new Intent(MainActivity.this, FirebaseFragment.class);
-                //startActivity(i);
+               // Intent i = new Intent(MainActivity.this, HomeActivity.class);
+               // startActivity(i);
                 break;
             case 1:
         navItem =  _bottomNav.getMenu().findItem(R.id.nav_mode_favs);
@@ -409,6 +412,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment selectedfragment=null;
         RelativeLayout container = (RelativeLayout) findViewById(R.id.fragfirebase);
         container.setVisibility(View.GONE);
+        ConstraintLayout homecont=(ConstraintLayout) findViewById(R.id.act_home);
 
 
         switch (item.getItemId()) {
@@ -451,8 +455,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                // _toolbar.setTitle(R.string.favs);
                // container.setVisibility(View.GONE);
 
-                Intent i=new Intent(getApplicationContext(),MySearchFoll.class);
+                Intent i=new Intent(getApplicationContext(), SearchActivity.class);
                 startActivity(i);
+
+                //homecont.setVisibility(View.VISIBLE);
 
                 break;
             }

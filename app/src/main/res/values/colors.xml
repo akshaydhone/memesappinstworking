@@ -26,7 +26,7 @@
     <color name="colorAccent">@color/accent</color>
 
     <!-- Colors from Palette -->
-    <color name="primary">#26252d</color>
+    <color name="primary">#87ceeb</color>
     <color name="primary_dark">#1e1e24</color>
     <color name="primary_light">#C5CAE9</color>
     <color name="accent">#FF5722</color>
