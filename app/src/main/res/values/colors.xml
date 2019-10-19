@@ -34,6 +34,12 @@
     <color name="secondary_text">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+
+    <color name="blue">#009dff</color>
+
+    <color name="grey">#d3d3d3</color>
+    <color name="dark_grey">#787878</color>
+    <color name="green">#62e714</color>
     <!-- End colors from Palette -->
 
 

@@ -1,222 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.gsantner.memetastic.activity.ProfileAct">
+    tools:context=".Profile.ProfileActivity">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/image_profile"
-        android:layout_width="126dp"
-        android:layout_height="121dp"
-        android:layout_marginLeft="110dp"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/ceo" />
-
-
-    <TextView
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <include layout="@layout/layout_centre_profile" />
+
+        <ProgressBar
+            android:id="@+id/profile_progress"
+            style="@android:style/Widget.Holo.Light.ProgressBar"
+            android:layout_width="131dp"
+            android:layout_height="115dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="65dp" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/noofposts"
-        android:text="47"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="170dp"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <include layout="@layout/bottom_panel_navigation_view" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/posts"
-        android:layout_below="@+id/noofposts"
-        android:text="Posts"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:layout_marginLeft="40dp"
-
-        />
+    </RelativeLayout>
 
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/nooffollowers"
-        android:text="124"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="170dp"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/followers"
-        android:layout_below="@+id/noofposts"
-        android:text="Followers"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:layout_marginLeft="135dp"
-        />
-
-
-
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/nooffollowinngs"
-        android:text="324"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:layout_marginLeft="270dp"
-        android:layout_marginTop="170dp"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/followings"
-        android:layout_below="@+id/noofposts"
-        android:text="Followings"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:layout_marginLeft="250dp"
-        />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/userid"
-        android:text="Akash4570"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="220dp"
-        android:textStyle="bold"
-
-        />
-
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bio"
-        android:layout_marginStart="8dp"
-        android:text="I am a Developer"
-        android:layout_marginTop="240dp"
-        android:textStyle="bold"
-
-        />
-
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bio1"
-        android:layout_marginStart="8dp"
-        android:text="Coding is Life"
-        android:layout_marginTop="260dp"
-        android:textStyle="bold"
-        />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bio2"
-        android:layout_marginStart="8dp"
-        android:text="www.webcubictechnologies.com"
-        android:layout_marginTop="280dp"
-        android:textStyle="bold"
-
-        />
-
-
-    <ImageView
-        android:id="@+id/nice"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="310dp"
-        android:src="@drawable/nyc1" />
-
-    <ImageView
-        android:id="@+id/nice1"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_toRightOf="@+id/nice"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="310dp"
-        android:src="@drawable/nyc2" />
-
-    <ImageView
-        android:id="@+id/nice2"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_toRightOf="@+id/nice1"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="310dp"
-        android:src="@drawable/nyc3" />
-
-    <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:id="@+id/nice3"
-        android:layout_marginTop="430dp"
-        android:src="@drawable/nyc4">
-
-    </ImageView>
-
-
-    <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:id="@+id/nice4"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="430dp"
-        android:layout_toRightOf="@+id/nice3"
-        android:src="@drawable/nyc5">
-
-    </ImageView>
-
-
-
-    <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:id="@+id/nice5"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="430dp"
-        android:layout_toRightOf="@+id/nice4"
-        android:src="@drawable/nyc6">
-
-    </ImageView>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
+    android:background="#fff"
     tools:context="net.gsantner.memetastic.activity.MySearchFoll">
 
     <TextView
@@ -52,7 +52,7 @@
         android:layout_alignTop="@+id/search_field"
         android:layout_marginRight="30dp"
 
-        app:srcCompat="@drawable/ic_search_blackk_24dp" />
+        app:srcCompat="@drawable/ic_search_black_24dp" />
 
 
     <android.support.v7.widget.RecyclerView
